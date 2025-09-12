@@ -1,0 +1,4 @@
+node_modules
+password
+package-lock.txt
+.env.local
