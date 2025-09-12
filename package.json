@@ -1,0 +1,38 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "firebase": "^12.2.1",
+    "next": "^15.5.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "name": "team-9-app",
+  "description": "---",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Engineer-Guild-Hackathon/team-9-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Engineer-Guild-Hackathon/team-9-app/issues"
+  },
+  "homepage": "https://github.com/Engineer-Guild-Hackathon/team-9-app#readme",
+  "devDependencies": {
+    "typescript": "5.9.2"
+  }
+}
