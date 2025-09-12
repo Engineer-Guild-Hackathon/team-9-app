@@ -1,0 +1,43 @@
+/* The main container for the gallery */
+.galleryContainer {
+  width: 100%;
+  overflow: hidden;
+  padding: 2rem 0;
+  background-color: #f0f0f0;
+  border-top: 1px solid #ddd;
+  margin-top: 2rem;
+  /* This is for the alternative fade effect below */
+  /* mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); */
+}
+
+/* The wrapper that will scroll. We use display: inline-flex to let its width be determined by its content. */
+.marqueeContent {
+  display: inline-flex; /* Changed from flex */
+  animation: scroll 40s linear infinite;
+}
+
+/* Pause animation on hover for better UX */
+.galleryContainer:hover .marqueeContent {
+  animation-play-state: paused;
+}
+
+/* The animation keyframes */
+@keyframes scroll {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    /* We translate by -50% because our content is duplicated (200% width) */
+    transform: translateX(-50%); 
+  }
+}
+
+/* Individual image styling (no changes needed here) */
+.galleryImage {
+  height: 150px;
+  width: auto;
+  margin: 0 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
