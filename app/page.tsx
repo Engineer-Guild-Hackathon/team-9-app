@@ -8,6 +8,8 @@ export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [message, setMessage] = useState("画像をアップロードしてください");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState("");
   
   // New state to hold the list of all image URLs
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -76,6 +78,36 @@ export default function Home() {
 
     // After a successful upload, refresh the image list to show the new one
     fetchImages(); 
+    setIsUploading(false);
+  };
+
+  const handleAnalyze = async () => {
+    if (imageUrls.length === 0) {
+      setAnalysisResult("先に写真をアップロードしてね！");
+      return;
+    }
+    setIsAnalyzing(true);
+    setAnalysisResult("AIが分析中...");
+
+    try {
+      const response = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageUrls }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Analysis request failed');
+      }
+
+      const data = await response.json();
+      setAnalysisResult(data.analysis);
+    } catch (error) {
+      console.error(error);
+      setAnalysisResult("分析に失敗しました。もう一度試してください。");
+    }
+
+    setIsAnalyzing(false);
   };
 
   return (
@@ -104,6 +136,20 @@ export default function Home() {
             <img key={index} src={url} alt={`Uploaded image ${index}`} className={styles.galleryImage} />
           ))}
         </div>
+      </div>
+
+      {/* New Analysis Section */}
+      <div style={{ margin: "2rem 0", padding: "1.5rem", backgroundColor: "#eef2ff", borderRadius: "8px" }}>
+        <h2>AIによる「好き」の分析</h2>
+        <p>ギャラリーの写真から、あなたの興味をAIが教えてくれるよ。</p>
+        <button onClick={handleAnalyze} disabled={isAnalyzing}>
+          {isAnalyzing ? "考え中..." : "わたしの「好き」を分析して！"}
+        </button>
+        {analysisResult && (
+          <div style={{ marginTop: "1rem", padding: "1rem", backgroundColor: "white", borderRadius: "4px" }}>
+            <p style={{ whiteSpace: "pre-wrap" }}>{analysisResult}</p>
+          </div>
+        )}
       </div>
     </main>
   );
